@@ -1,0 +1,178 @@
+\documentclass[12pt,a4paper]{report}
+%\fontencoding{T1}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lingmacros}
+\usepackage{tree-dvips}
+\usepackage{url}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage[x11names,rgb,usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{colortbl}
+\usepackage{algorithm2e}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\definecolor{gray90}{gray}{0.90}
+\definecolor{ForestGreen}{RGB}{15,116,61}
+\definecolor{ForestLight}{RGB}{57,181,74}
+\definecolor{ForestDark}{RGB}{0,104,56}
+\definecolor{Sapphire}{RGB}{28,117,188}
+\definecolor{gray25}{gray}{0.25}
+\newcommand{\hsp}{\hspace{20pt}}
+
+\usepackage{tikz}
+\usetikzlibrary{snakes,arrows,shapes}
+\usepackage{amsmath}
+
+\usepackage{xcolor} 
+\usepackage{fix-cm} 
+\usepackage{pgfplots}
+
+%Titelblad fix
+%\usepackage[ansinew]{inputenc}
+\usepackage{a4}
+
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+
+\begin{document}
+\setcounter{page}{2}
+
+\begin{titlepage}
+\input{Indhold/forside}
+\thispagestyle{empty}
+\end{titlepage}
+
+%create empty page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+%Hent titelblad (Som henter synopsis fra Indhold/Synopsis.tex):
+\input{Indhold/Titelblad}
+
+%create empty page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\addtocontents{toc}{\protect\enlargethispage{\baselineskip}}
+{\small\tableofcontents}
+% Fjerner sidetal på indholdsfortegnelse
+\thispagestyle{empty}
+\renewcommand{\chaptername}{Kapitel}
+
+
+%create empty page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+% TEKST SÆTTES UNDER HER
+\chapter{Indledning}
+\setcounter{page}{3}
+	\input{Indhold/Indledning} %Indhold af Indledning.tex bliver sat ind her.
+	
+	\section{Initierende problem}
+	\input{Indhold/Initerendeproblem}
+
+\chapter{Analyse}
+ 
+    \input{Indhold/indledning_kap2.tex}
+
+    \section{GSM}
+    \input{Indhold/GSM.tex}
+
+	\section{SMS-teknologi}
+	\input{Indhold/SMS_Teknologi}
+	
+	\section{Tegnsæt}
+	\input{Indhold/Tegnsaet}
+	
+	\section{Komprimeringsalgoritmer}
+	\input{Indhold/Komprimeringsalgoritmer}
+	
+	\section{Problemdokumentation}
+	\input{Indhold/Problemdokumentation}
+	
+	\section{Interessenter}
+	\input{Indhold/Interessenter}
+
+	\section{Eksisterende løsninger}
+	\input{Indhold/Eksisterende_Loesninger}
+
+	\section{Afgrænsning}
+	\input{Indhold/Problemafgraensning}
+
+	\section{Problemformulering}
+	\input{Indhold/Problemformulering}	
+	
+	\section{Produktkrav}
+	\input{Indhold/Produktkrav.tex}
+	
+%\chapter{Teori om komprimering?}
+
+
+
+\chapter{Løsning}
+
+  \input{Indhold/indledning_kap3.tex}
+
+	\section{Huffman træer}
+	\label{huffman_traer}
+	\input{Indhold/Huffmantraeer.tex}
+
+	\section{Implementering}
+	
+	\subsection{Brug af træer}
+	\input{Indhold/Brugaftraeer.tex}   
+   
+	\subsection{Tabsfri kontra ikke-tabsfri}
+    \label{tkitf}
+	\input{Indhold/Tabsfri.tex}
+
+	\subsection{Forekomst af tegn}
+    \label{tegnForekomst}
+	\input{Indhold/TegnForekomst.tex}
+
+   \section{Program}
+
+	\subsection{Dataindsamling}
+	\input{Indhold/SmaaProgrammer.tex}
+   
+%  	\subsection{Bit-træer}
+%   	\input{Indhold/Implementering_Bittrae.tex}
+   	
+   	\subsection{Program beskrivelse}
+   	\input{Indhold/Program_beskrivelse.tex}
+   	
+   	\section{Resultater}
+    \label{resultater}
+   	\input{Indhold/Resultater}
+
+\chapter{Konklusion}
+
+           \input{Indhold/Konklusion.tex}
+
+           \section{Perspektivering}
+	\input{Indhold/Perspektivering.tex}
+
+           \section{Det videre arbejde}
+	\input{Indhold/videre_arbejde.tex}
+
+%\begin{thebibliography}{99} %Max
+\bibliographystyle{plain}
+\bibliography{Referencer}
+%\end{thebibliography}
+
+\input{bilag}
+
+\end{document}
+
