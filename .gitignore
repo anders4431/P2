@@ -33,3 +33,7 @@
 *.vrb
 *.xdy
 *.tdo
+*.tps
+.project
+.settings/
+.texlipse
