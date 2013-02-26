@@ -3,12 +3,25 @@
 
 % Document root
 \begin{document}
-% AAU Titelblad skal tilf�jes 
+%\let\clearpage\relax % <-- Komandoen fjerner clearpage sideskift
 
+% AAU Titelblad
+\input{Indhold/Titelblad2}
+
+% Rapport sektioner
+\chapter{Analyse}
+\clearpage
+
+\section{Uvidende Unge}
 \input{Indhold/UvidendeUnge}
 
+\section{Økonomi på skemaet}
 \input{Indhold/Oekonomipaaskemaet}
 
+\section{Lommepenge statistik}
+\input{Indhold/Lommepengestatistik}
+
+\section{Lommepengemodeller}
 \input{Indhold/Lommepengemodeller}
 
 % Kilder

@@ -3,6 +3,7 @@
 *.alg
 *.aux
 *.bbl
+*.bat
 *.blg
 *.dvi
 *.fdb_latexmk
@@ -32,3 +33,7 @@
 *.vrb
 *.xdy
 *.tdo
+*.tps
+.project
+.settings/
+.texlipse
