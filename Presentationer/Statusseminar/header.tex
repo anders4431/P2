@@ -1,0 +1,68 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+
+
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\useinnertheme{circles}
+\usecolortheme{whale}
+\usecolortheme{orchid}
+
+
+
+\definecolor{beamer@aauprimary}{RGB}{33,26,82}
+\definecolor{beamer@aausecondary}{RGB}{84,97,110}
+
+\setbeamercolor{structure}{fg=beamer@aauprimary}
+\setbeamercolor{aauprimary}{fg=white,bg=beamer@aauprimary}
+\setbeamercolor{titlelike}{parent=structure}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{title}{fg=black}
+\setbeamercolor{item}{fg=black}
+\setbeamercolor{aausecondary}{fg=white,bg=beamer@aausecondary}
+
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}{aauprimary}
+    \vskip2pt\insertsectionnavigationhorizontal{\paperwidth}{}{}\vskip2pt
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+    \begin{beamercolorbox}[colsep=0.5pt]{middle separation line head}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[ht=1pt,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{aausecondary}
+    \end{beamercolorbox}%
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[ht=2.5ex,wd=\paperwidth]{aauprimary}
+  DAT-A325
+    \hfill
+    {Slide \insertframenumber{} af \inserttotalframenumber}
+    \vspace{0.5ex}
+   \end{beamercolorbox}
+}
+
+\mode
+<all>
+       
+\title[Elektroniske Lommepenge] % (optional, only for long titles)
+{Elektroniske Lommepenge}
+\subtitle{Statusseminar Presentation}
+\author[DAT-A325] % (optional, for multiple authors)
+{Jannek Bossen \and Kevin Brämer \and Anders Olesen \and Frederik Bønneland \and Katrine Tjell \and Jonas Christoffersen \and Ólavur Joensen}
+\institute{Datalogi A325}
+\date{Statusseminar 19. marts 2013}
+\subject{Informatik}
+
+\titlegraphic{\includegraphics[width=3cm]{../../Billeder/aau-logo-new.pdf}}
