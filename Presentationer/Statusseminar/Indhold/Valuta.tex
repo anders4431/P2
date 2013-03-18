@@ -3,16 +3,39 @@
 % Standard LaTeX syntaks benyttes (itemize, tabular osv)
 % Husk at tilføje eventuelle packages i headeren
 
+\newcommand{\bad}{{\color{red}--}}
+\newcommand{\good}{{\color{ForestGreen}+}}
+
 \begin{frame}
 \frametitle{Valuta}
-\framesubtitle{Undertitel} % VALGFRI - kan fjernes
-    \begin{itemize}
-        \item{hej}
-        \pause
-        \item{hej}
-        \pause
-        \item{hej}
-    \end{itemize}
+\framesubtitle{Supplement eller lommepenge} % VALGFRI - kan fjernes
+    To forskellige implementationer
+    \pause
+    \begin{multicols}{2}
+    \interlinepenalty=10000
+        \begin{enumerate}
+            \item{Selvstændigt ''spil''}
+            \begin{itemize}
+                \item[\good]{Fokus på læring af økonomi}
+                \item[\good]{Ingen konsekvenser}
+                \item[\bad]{Ingen konsekvenser}
+                \item[\bad]{Unge kan hurtigt miste interessen}
+                \item[\bad]{Irrelevant for enebørn}
+                \item[\bad]{Opsparing ingen betydelig effekt}
+            \end{itemize}
+            \pause
+            \columnbreak 
+            \item{Integrering med lommepenge}
+            \begin{itemize}
+                \item[\good]{Opsparing giver fordele}
+                \item[\good]{Altid relevant}
+                \item[\good]{Kan bruges ude i det virkelige liv}
+                \item[\bad]{Gæld bliver virkelig}
+                \item[\bad]{Handel og leg kan blive kompliceret}
+                \item[\bad]{Kræver mere administration}
+            \end{itemize}
+        \end{enumerate}
+    \end{multicols}
 \end{frame}
     
 %\begin{frame} .... 
