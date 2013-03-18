@@ -3,16 +3,125 @@
 % Standard LaTeX syntaks benyttes (itemize, tabular osv)
 % Husk at tilføje eventuelle packages i headeren
 
+\newcommand{\fordel}[1]{ % Item med en grøn '+' bullet
+\begin{description}\item[\color{green}\textbf{+}]{#1}\end{description}
+}
+
+\newcommand{\ulempe}[1]{ % Item med en rød '-' bullet
+\begin{description}\item[\color{red}\textbf{-}]{#1}\end{description}
+}
+
+\newcommand{\headercell}[1]{ % Farvet celle med hvid tekst til tabeller
+\cellcolor{aauprimary}\color{white}\small\textbf{{#1}}
+}
+
 \begin{frame}
 \frametitle{Modeller}
-\framesubtitle{Undertitel} % VALGFRI - kan fjernes
+\framesubtitle{\textbf{Model 1:} Det rene tilskud} 
     \begin{itemize}
-        \item{hej}
-        \pause
-        \item{hej}
-        \pause
-        \item{hej}
+        \item{Fast udbetaling}
+            \begin{itemize}
+                \item{En gang om ugen}
+                \item{En gang om måneden}
+            \end{itemize}
+        \item{Ingen pligter} 
     \end{itemize}
+    \vspace{\baselineskip}
+    \pause
+    \fordel{Barnet har stor frihed}
+    \ulempe{Ikke arbejde for penge - ``Penge er en selvfølge''}
 \end{frame}
-    
-%\begin{frame} ....
+
+\begin{frame}
+\frametitle{Modeller}
+\framesubtitle{\textbf{Model 2:} Lommepenge inkluderer pligter}
+    \begin{itemize}
+        \item{Faste pligter}
+        \item{Fast udbetaling}
+        \item{Pligter skal udføres for at få udbetalt}
+    \end{itemize}
+    \vspace{\baselineskip}
+    \pause
+    \fordel{Alle hjælper til i husholdningen}
+    \ulempe{Gider ikke at arbejde udover faste pligter - giver ikke penge}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modeller}
+\framesubtitle{\textbf{Model 3:} Akkordmodellen}
+    \begin{itemize}
+        \item{Udbetaling afhænger af udførelse af pligter}
+        \item{Fast eller varierende beløb}
+            \begin{itemize}
+                \item{Større opgaver giver mere}
+            \end{itemize}
+    \end{itemize}
+    \vspace{\baselineskip}
+    \pause
+    \fordel{Ligner mere virkelighedens økonomi (jobs m.m.)}
+    \ulempe{Mulig mistillid til familiens forhold - ``kræver penge''}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modeller}
+\framesubtitle{\textbf{Model 4:} Lomme penger et, pligter noget andet}
+    \begin{itemize}
+        \item{Fast udbetaling}
+        \item{Forventes at pligter udføres}
+            \begin{itemize}
+                \item{Påvirker dog ikke udbetalingen}
+            \end{itemize}
+    \end{itemize}    
+    \vspace{\baselineskip}
+    \pause
+    \fordel{Bedre sammenhold, man får ikke penge for alt}
+    \ulempe{Svagt billede af økonomi - ingen sammenhæng mellem arbejde og løn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modeller}
+\framesubtitle{\textbf{Vurdering af modeller:} Kriterier}
+    \begin{enumerate}
+        \item{Økonomisk forståelse}
+            \begin{itemize}
+                \item{I hvor høj grad giver modellen en forståelse af virkelighedens økonomi?}
+            \end{itemize}
+        \pause
+        \item{Husstandsbidrag}
+            \begin{itemize}
+                \item{I hvor høj grad bidrager modellen til sammenholdet i familien?}
+            \end{itemize}
+        \pause
+        \item{Tidskrav}
+            \begin{itemize}
+                \item{Hvor meget tid kræves der af den unge at benytte denne model?}
+            \end{itemize}
+        \pause
+        \item{Enkelthed}
+            \begin{itemize}
+                \item{Hvor kompliceret er modellen i f.eks. beregning af det udbetalte beløb?}
+            \end{itemize}
+        \pause
+        \item{Digitaliserings relevans}
+            \begin{itemize}
+                \item{I hvor høj grad er det relevant at lave en digitalisering/systematisering af modellen?}
+            \end{itemize}
+    \end{enumerate}    
+\end{frame}
+
+\begin{frame}
+\frametitle{Modeller}
+\framesubtitle{\textbf{Vurdering af modeller:} Vurdering}
+\begin{center}
+    \begin{tabular}{| l | r | r | r | r |} 
+    \hline
+    \cellcolor{aauprimary} & \headercell{Model 1} & \headercell{Model 2} & \headercell{Model 3} & \headercell{Model 4} \\ \hline
+    Økonomisk forståelse & 1 & 3 & 5 & 2 \\ \hline
+    Husstandsbidrag & 1 & 3 & 3 & 4 \\ \hline
+    Tidskrav (Højere er bedre) & 5 & 3 & 2 & 4 \\ \hline
+    Enkelthed & 4 & 3 & 2 & 3 \\ \hline
+    Digitaliserings relevans & 1 & 3 & 5 & 3 \\ \hline
+    \headercell{I alt} & \headercell{12} & \headercell{15} & \headercell{17} & \headercell{16} \\ \hline
+    \end{tabular}
+\end{center}
+\end{frame}
