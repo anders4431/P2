@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169,table]{beamer}
+\documentclass[aspectratio=169,table,dvipsnames]{beamer}
 
 %\usepackage{uarial}
 \usepackage{helvet}
@@ -6,8 +6,13 @@
 \usepackage[danish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
+\usepackage{multicol}
 
 
+\newcommand{\closerslide}[1]{ % Item med en rød '-' bullet
+\section*{}
+\begingroup\setbeamercolor{normal text}{fg=white}\setbeamercolor{background canvas}{bg=beamer@aauprimary}\begin{frame}[noframenumbering]\begin{center}\color{white}\tiny\textit{#1}\end{center}\end{frame}\endgroup
+}
 
 \setbeamertemplate{navigation symbols}{}%remove navigation symbols
 \DeclareOptionBeamer{compress}{\beamer@compresstrue}
