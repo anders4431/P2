@@ -1,18 +1,59 @@
-[IKKE NOGEN BESTEMT ORDEN ENDNU]
-[TABELLER ER IKKE BLIVE INDLEJRET ENDNU]
-Dette afsnit kommer til at handle om hvordan man kan beskrive dette projekts problemområde, en husholdnings administration af pligter og børne økonomi, i form af klasser og hændelser. Klasserne er overordnede repræsentationer af objekter, som en forælder eller en pligt, hvor hændelser er de ting som en klasse kan forårsage eller blive påvirket af. I dette problemområde vil klasserne være sådan noget som en forældre, en pligt, et barn osv., mens en hændelse kunne være at en forælder opretter en ny pligt, og derefter en anden hændelse hvor et barn optager pligten. En hændelsestabel for dette problemområde kan blive set i figur [REF].
+Dette afsnit kommer til at handle om hvordan man kan beskrive dette projekts problemområde, som er en husholdnings administration af pligter og børneøkonomi, i form af klasser og hændelser. Klasser er overordnede repræsentationer af objekter, som for eksempel en enkel Pligt eller et Barn. Hændelser er de begivenheder og ændringer, som klasserne kan forårsage eller blive påvirket af. Klasser kan normalt blive beskrevet som et navnord, for eksempel en Forælder eller en Pligt, mens hændelser kan blive beskrevet som udsagnsord, for eksempel en Forælder som opretter en ny Pligt, og et Barn som efterfølgende optager denne Pligt. Klasser og hændelser for dette problemområde er blevet sat op i en hændelsestabel, som kan blive set på tabel [REF]. En plads som har et plus betyder, at den tilsvarende kun forekommer en gang per klasse instans, og et gange betyder at det kan forekomme flere gange.
 
-[TABEL]
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{| 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |}
+	\hline
+	& \textbf{Pligt Opretning} & \textbf{Optagelse} & 
+	\textbf{Anmodning Opretning} & \textbf{Behandling} & 
+	\textbf{Færdiggørelse} & \textbf{Se Ledige} & 
+	\textbf{Hæve} & \textbf{Se Statistik} \\ \hline
+	\textbf{Forælder} & * &  &  & * & * & * & * & * \\ \hline
+	\textbf{Pligt} & + & * &  &  & + &  &  &  \\ \hline
+	\textbf{Barn} &   & * & * &  & * & * & * & * \\ \hline
+	\textbf{Model} & * &  &  &  & * &  &  &  \\ \hline
+	\textbf{Anmodning} &  &  & + & + &  &  &  &  \\ \hline
+	\end{tabular}
+	\caption{Hændelsestabel.}
+\end{table}
 
-Tabellen kan blive udvidet yderligere, ved at inkludere en klasse som konto eller graf, som sagtens kan blive inkluderet under en de andre mere fremtrædende klasser eller hændelser. En konto er inkluderet i barn klassen, og graf klassen er dels inkluderet i både barn og forældre klassen, samt ’se statistik’ hændelsen. En ‘Anmodning’ er i denne sammenhæng en besked et barn sender til sin forælder om, at det har fuldført sin tilskrevet pligt, og ønsker den behandlet.
+Tabellen skulle gerne give et overordnet overblik til sammenhængende mellem klasser og hændelser, og være beskrivende for de mere væsentlige dele af problemområdet. En Anmodning er i denne sammenhæng en besked et barn sender til sin Forælder om, at det har fuldført en af sine tilskrevne pligter, og ønsker den behandlet.
 
-Herefter kan klasserne blive opsat i et klassediagram, med henhold til deres indbyrdes relationer. Dette klassediagram kan blive set i figur [REF]. Klassehierarkier bliver vist indkapslet i kasser, samt pile fra underklasser til superklasser. Horisontale streger vise associering, som model og forælder, hvor lommepenge modellen går ind og påvirker på hvad forældrene gør i forhold til pligter og udbetalinger. En klasse som tilhører en anden klasse bliver vist lignende den for klassehierarkiet, men med en rombe i stedet for en pil. Ligeledes angiver tallene mængden af hver klasse til en anden klasse. For eksempel så er en pligt altid kun forbundet til den forælder som lavet den, mens en forælder sagtens kan lave adskillige pligter.
+Klasserne kan herefter blive sat op i klassediagram, som viser de indbyders sammenhænge mellem klasserne i problemområdet. Dette klassediagram kan blive set i figur [REF]. Klassehierarkier bliver vist indkapslet i kasser, samt pile fra underklasser til superklasser. Rene streger vise associering, som Model og Forælder, hvor lommepenge modellen går ind og påvirker på hvad forældrene gør i forhold til pligter og udbetalinger. En klasse som tilhører en anden klasse bliver vist lignende den for klassehierarkiet, men med en rombe i stedet for en pil. Ligeledes angiver tallene mængden af hver klasse til en anden klasse. For eksempel så er en pligt altid kun forbundet til den Forælder som lavet den, mens en Forælder sagtens kan lave adskillige pligter.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Billeder/KlasseDiagram.png}
-\caption{KlasseDiagram}
+\caption{KlasseDiagram.}
 \label{KlasseDiagram}
 \end{figure}
 
-Diagrammet kan blive skrevet meget mere indviklet, hvis man gør op for alle mulige relationer mellem klasserne. En anmodning kunne ligeså vel sat i forbindelse med en pligt, og man kunne begynde lave klasser for pligt kvitteringer, eller en pil mellem barn og pligt for også at vise en mulige liste af allerede udførte pligter, som bliver beholdt til arkivering og statistik. Dette skulle gerne give et ove
+Ud fra den foregående hændelsestabel samt klassediagram, så kan man beskrive klasser mere detaljeret ved hjælp af hændelsesforløb diagrammer. Hændelsesforløb forløb går ind på hver klasse, og viser, hvordan et objekt af en klasse opstår i problemområdet og systemet, og hvad der sker med det indtil det ’dør’. Pille viser hændelser som hver klasse kan udføre, eller som kan blive udført på dem. Hændelser kan også forårsage, at et objekt skifter tilstand, som bliver vist med tilstandsbokse. Hændelser kan også føre tilbage til den samme tilstandsboks, som betyder hændelses kan blive udført adskillige gange. Det følgende viser fire hændelsesforløb for dette problemområde. Metode hændelses forløbet er blevet udeladt, som sagt fordi den går ind og påvirker andre områder i systemet, og vil derfor ikke gøre andet end at være aktiv, indtil den bliver udskiftet.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{Billeder/ForaelderForloeb.png}
+\caption{Forælder Hændelsesforløb.}
+\label{ForaelderHaendelsesforloeb}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{Billeder/BoernForloeb.png}
+\caption{Barn Hændelsesforløb.}
+\label{BarnHaendelsesforloeb}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{Billeder/PligtForloeb.png}
+\caption{Pligt Hændelsesforløb.}
+\label{PligtHaendelsesforloeb}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{Billeder/AnmodningForloeb.png}
+\caption{Anmodning Hændelsesforløb.}
+\label{AnmodningHaendelsesforloeb}
+\end{figure}
