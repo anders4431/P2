@@ -1,13 +1,13 @@
-Dette afsnit kommer til at handle om hvordan man kan beskrive dette projekts problemområde, som er en husholdnings administration af pligter og børne økonomi, i form af klasser og hændelser. Klasser er overordnede repræsentationer af objekter, som for eksempel en enkel Pligt eller et Barn. Hændelser er de begivenheder og ændringer, som klasserne kan forårsage eller blive påvirket af. Klasser kan normalt blive beskrevet som et navneord, for eksempel en Forælder eller en Pligt, mens hændelser kan blive beskrevet som udsagnsord, for eksempel en Forælder som opretter en ny Pligt, og et Barn som efterfølgende optager denne Pligt. Klasser og hændelser for dette problemområde er blevet sat op i en hændelsestabel, som kan blive set på tabel \ref{Haendelstabel}. En plads som har et plustegn betyder, at den tilsvarende kun forekommer en gang pr. klasse instans, og et gangetegn betyder at det kan forekomme flere gange.
+Dette afsnit kommer til at handle om hvordan man kan beskrive dette projekts problemområde, som er en husholdnings administration af pligter og børne økonomi, i form af klasser og hændelser. Klasser er overordnede repræsentationer af objekter, som for eksempel en enkel Pligt eller et Barn. Hændelser er de begivenheder og ændringer, som klasserne kan forårsage eller blive påvirket af. Klasser kan normalt blive beskrevet som et navneord, for eksempel en Forælder eller en Pligt, mens hændelser kan blive beskrevet som udsagnsord, for eksempel en Forælder som opretter en ny Pligt, og et Barn som efterfølgende optager denne Pligt. Klasser og hændelser for dette problemområde er blevet sat op i en hændelsestabel, som kan blive set på tabel \ref{Haendelstabel}. En plads som har et plustegn betyder, at den tilsvarende hændelse kun forekommer en gang pr. klasse instans, og et gangetegn betyder at det kan forekomme flere gange.
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{| >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} | >{\centering\arraybackslash}p{1in} |}
+	\begin{tabular}{| >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} |}
 	\hline
 	& \textbf{Pligt} & \textbf{Optage} & 
-	\textbf{Anmodning} & \textbf{Behande} & 
+	\textbf{Anmod} & \textbf{Behande} & 
 	\textbf{Overføre} & \textbf{Ledige} & 
-	\textbf{Hæve} & \textbf{Statistik} \\ \hline
+	\textbf{Hæve} & \textbf{Stats} \\ \hline
 	\textbf{Forælder} & * &  &  & * & * & * & * & * \\ \hline
 	\textbf{Pligt} & + & * &  &  & + &  &  &  \\ \hline
 	\textbf{Barn} &   & * & * &  & * & * & * & * \\ \hline
