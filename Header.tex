@@ -1,0 +1,45 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[danish]{isodate}
+\usepackage[danish]{babel}
+\usepackage{url}
+\usepackage{color}
+\usepackage{ulem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{tabularx}
+
+% Fonts
+\usepackage{helvet} % <-- Helvetica (sans)
+\usepackage[sc]{mathpazo} % <-- Palatino (serif)
+\linespread{1.05}   % Extra linespread for Palatino
+
+% Extra settings
+% \setlength\parindent{0pt} % For at fjerne automatiske indrykninger
+% \let\clearpage\relax % For at fjerne alle clearpage sideskift
+
+% Commands
+\newcommand{\code}[1]{\texttt{#1}}
+
+% Meta (til titelblad)
+% HUSK; at rette Jonas i titelbladet.
+\newcommand{\rtitle}{Erstattes med rapportens titel} %<----
+\newcommand{\rtheme}{Elektroniske Lommepenge}
+\newcommand{\rperiod}{P2, 2013}
+\newcommand{\rdeadline}{\today} %<----Erstattes med rapportens deadline
+\newcommand{\rprints}{1} %<---- Erstattes med oplægsantal
+\newcommand{\rappendices}{0} %<---- Erstattes med bilagsantal og art
+\newcommand{\rlastpage}{} %<---- Erstattes med sideantal
+
+%%Jonas
+\usepackage{lastpage}
+
+%relinput
+\usepackage{xstring}
+\input{relinput/simplearray}
+%\input{relinput/simplearray-debug} %Enable this for debug..
+\input{relinput/relinput}

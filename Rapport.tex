@@ -1,70 +1,23 @@
 % Header
-\input{header}
+\input{Header}
 
 % Document root
 \begin{document}
 
 % AAU Titelblad
 % Muligt at indsætte denne i PDF'ens indholdsfortegnelse?
-\input{Indhold/Titelblad2}
+\input{Titelblad}
 
 \tableofcontents
 
-% Analyse Kapitel
-\chapter{Analyse}
-\input{Indhold/InitAnalyse}
+%ProblemAnalyse
+\relinput{Indhold/ProblemAnalyse/ProblemAnalyse.tex}
 
-\section{Initierende problem}
-\input{Indhold/Initierendeproblem}
-
-\section{Uvidende unge}
-\label{UvidendeUnge}
-\input{Indhold/UvidendeUnge}
-
-\section{Økonomi på skemaet}
-\label{Okonomi}
-\input{Indhold/OkonomiPaSkemaet}
-
-\section{Lommepenge-statistik}
-\label{LommeStat}
-\input{Indhold/Lommepengestatistik}
-
-\section{Lommepengemodeller}
-\label{LommeModeller}
-\input{Indhold/Lommepengemodeller}
-\subsection{Vurdering af Lommepengemodeller}
-\label{ModelVurdering}
-\input{Indhold/Vurderingaflommepengemodeller}
-
-\section{Valuta}
-\label{Valuta}
-\input{Indhold/SuppElLomme}
-
-\section{Eksisterende Løsninger}
-\subsection{Netbanker}
-\input{Indhold/Netbanker}
-\subsection{Freelance}
-\input{Indhold/Freelance}
-
-\section{Projektafgrænsning}
-\input{Indhold/ProjektAfgraensning}
-
-\section{Problemformulering}
-\input{Indhold/ProblemFormulering}
+%Projektafgrænsning
+\relinput{Indhold/ProjektAfgransning/ProjektAfgransning}
 
 %Design Kapitel
-\chapter{Design}
-\input{Indhold/InitDesign}
-
-\section{Problemområde}
-\input{Indhold/ObjektAnaDes}
-
-\section{WPF / XAML}
-\input{Indhold/WPFXAML}
-\subsection{Model-View-ViewModel}
-\input{Indhold/MVVM}
-
-\section{Øvrige Design Overvejelser}
+\relinput{Indhold/Design/Design}
 
 % Kilder
 \bibliographystyle{plain}
