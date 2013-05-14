@@ -16,6 +16,40 @@
 % lstlisting to show code nicely
 \usepackage{listings}
 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  backgroundcolor=\color{white},   % choose the background color; you 
+  basicstyle=\footnotesize,        % the size of the fonts that are used 
+  breakatwhitespace=false,         % sets if automatic breaks should 
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from 
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within 
+  extendedchars=true,              % lets you use non-ASCII characters; 
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for 
+  keywordstyle=\color{blue},       % keyword style
+  language={[Sharp]C},             % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to 
+  numbers=left,                    % where to put the line-numbers; 
+  numbersep=5pt,                   % how far the line-numbers are from 
+  numberstyle=\tiny\color{mygray}, % the style that is used for the 
+  rulecolor=\color{black},         % if not set, the frame-color may be 
+  showspaces=false,                % show spaces everywhere adding 
+  showstringspaces=false,          % underline spaces within strings 
+  showtabs=false,                  % show tabs within strings adding 
+  stepnumber=2,                    % the step between two line-numbers. 
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included 
+}
+
+
+
 % Fonts
 \usepackage{helvet} % <-- Helvetica (sans)
 \usepackage[sc]{mathpazo} % <-- Palatino (serif)
