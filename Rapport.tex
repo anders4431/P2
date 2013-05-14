@@ -1,13 +1,14 @@
 % Header
-\input{header}
+\input{Header}
 
 % Document root
 \begin{document}
 
 % AAU Titelblad
 % Muligt at indsætte denne i PDF'ens indholdsfortegnelse?
-\input{Indhold/Titelblad2}
+\input{Titelblad}
 
+<<<<<<< HEAD
 \tableofcontents
 
 % Rapport sektioner
@@ -32,44 +33,21 @@
 \label{LommeStat}
 \input{Indhold/Lommepengestatistik}
 %\aendre billede?
+=======
+>>>>>>> 2117fcafc3409ba5798f36628ded484d0d0a4667
 
-\section{Lommepengemodeller}
-\label{LommeModeller}
-\input{Indhold/Lommepengemodeller}
-\subsection{Vurdering af Lommepengemodeller}
-\label{ModelVurdering}
-\input{Indhold/Vurderingaflommepengemodeller}
+\tableofcontents
 
-\section{Valuta}
-\label{Valuta}
-\input{Indhold/SuppElLomme}
 
-\section{Eksisterende Løsninger}
-\subsection{Netbanker}
-\input{Indhold/Netbanker}
-\subsection{Freelance}
-\input{Indhold/Freelance}
+%ProblemAnalyse
+\relinput{Indhold/ProblemAnalyse/ProblemAnalyse.tex}
 
-\section{Projektafgrænsning}
-\input{Indhold/ProjektAfgraensning}
+%Projektafgrænsning
+\relinput{Indhold/ProjektAfgransning/ProjektAfgransning}
 
-\section{Problemformulering}
-\input{Indhold/ProblemFormulering}
+%Design Kapitel
+\relinput{Indhold/Design/Design}
 
-%\section{Indlæringsalder}
-%\input{Indhold/IndlaringsAlder}
-
-\chapter{Design}
-
-\subsection{Problemområde}
-\input{Indhold/ObjektAnaDes}
-
-\subsection{WPF / XAML}
-
-\subsection{Model-View-ViewModel}
-\input{Indhold/MVVM}
-
-\subsection{Øvrige Design Overvejelser}
 
 % Kilder
 \bibliographystyle{plain}
