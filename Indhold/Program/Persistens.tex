@@ -1,0 +1,56 @@
+I vores program, har vi brug for, at kunne gemme forskellige data et sted, så dataene kan hentes ind igen, når programmet starter. Dette kaldes persistens, og kan opnås på flere forskellige måder, hvor vi har undersøgt nogle få nærmere.
+De data vi gerne vil gemme til næste gang programmet starter, er bl.a. oplysninger om hvilke brugere der er af systemet, hvilke pligter der eksisterer, og informationer om overførsler til de forskellige konti.
+
+Til at løse denne opgave, har vi kigget på følgende oplagte muligheder.
+
+\subsubsection{XML fil}
+XML er et simpelt format, til at gemme information, der er let læseligt for både mennesker og computere. Informationerne der skal gemmes, struktureres med tags, og gemmes i en fil på harddisken. Tekstfilen kan så åbnes med en teksteditor, og der kan nemt ændres i, og tilføjes data til filen.
+
+%evt eksempel på noget xml værk?
+
+\subsubsection{Rationel database}
+En rationel database, er god til at håndtere en stor mængde data, med samme struktur. Data bliver delt op i tabeller med præcist definerede kolonner, og databasen selv understøtter en masse forskellige operationer (sorter efter, større end m.fl.), og kriterier for udvælgelse af hvilke data rækker der skal returneres. Her kiggede vi specifikt på SQLite, der er et lille bibliotek, der kan integreres direkte i programmet. Modsat dette, findes dedikerede database systemer som MySQL og PostgreSQL, der kører som separate programmer.
+
+Her ligger det store arbejde i koblingen mellem objekter i vores program, og rækker i databasen. Alle variable i en klasse skal mappes over til kolonner i databasen, og specielt referencer til andre objekter, og egne datatyper, kan være svære at håndtere. Denne problemstilling kendes som "The object-relational impedance mismatch". % KILDE: http://www.agiledata.org/essays/impedanceMismatch.html
+
+\subsubsection{Objekt database}
+En object database,  er forskellig fra en rationel database, på den måde, at den er baseret på objekter, og derfor bare kan tage mod et objekt og gemme det.
+
+Vi har valgt at gå videre med en object orienteret database af flere årsager. For det første er den er enkel at implementere. For det andet, vil slippe for, at skulle lave en "mapping" mellem klasser i C\# og kolonner i den rationelle database, hvor med en rationel database, vil "mappingen" mellem klasser og kolonner skulle opdateres eller omskrives hver gang en klasse ændres. Dette vil specielt være omfattende for os, da vi med vores begrænsede erfaring i objekt orienteret programmering, ofte vil lave store ændringer af vores klasser.
+Til at klare opgaven som objekt database benyttes databasen NDatabase. NDatabase er en simpel open source object database lavet til C\#. Databasen understøtter LINQ, der er query sprog i Microsoft .NET Framework, der understøtter type sikkerhed og IntelliSense.  %kilde http://docs.ndatabase.net/index.html?features.html og http://msdn.microsoft.com/en-us/library/vstudio/bb397897%28v=vs.110%29.aspx
+
+Til at håndtere forbindelsen til databasen, er der lavet en statisk klasse. For at gemme fx et objekt af typen transfer i databasen, benytter vi "Store" metoden beskrevet i \ref{lst:db} . For så at hente transfers ud igen, benyttes metoden "GetTransfersForChild", der ved brug af en LINQ query returnerer overførslerne hørende til et objekt af typen "Child".
+
+\begin{lstlisting}[caption={Uddrag af filen db.cs fra kildekoden til programmet},label={lst:db}]
+public static class db
+{
+	//En string dbFileName med filnavnet på databasen laves
+	private const string dbFileName = "database.db";
+	
+	//Herefter åbnes database forbindelsen
+	private static NDatabase.Api.IOdb odb = OdbFactory.Open(dbFileName);
+
+	public static void Store(Transfer transfer)
+	{
+		//Objektet bliver sendt til databasen
+		odb.Store(transfer);
+		
+		//Databasen bliver tvunget til at opdatere
+		odb.Commit();
+	}
+	
+	public static Collection<Transfer> GetTransfersForChild(Child child)
+	{
+		var transfers = from transfer in odb.QueryAndExecute<Transfer>()
+						where transfer.Recipient != null && transfer.Recipient.FullName == child.FullName
+						select transfer;
+
+		Collection<Transfer> Transfers = new Collection<Transfer>();
+
+		foreach (var t in transfers)
+			Transfers.Add(t);
+
+		return Transfers;
+	}
+}
+\end{lstlisting}
