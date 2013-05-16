@@ -12,6 +12,7 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{tabularx}
+\usepackage{ucs}
 
 % lstlisting to show code nicely
 \usepackage{listings}
@@ -29,6 +30,7 @@
   commentstyle=\color{mygreen},    % comment style
   deletekeywords={...},            % if you want to delete keywords from 
   escapeinside={\%*}{*)},          % if you want to add LaTeX within 
+  inputencoding=utf8x,
   extendedchars=true,              % lets you use non-ASCII characters; 
   frame=single,                    % adds a frame around the code
   keepspaces=true,                 % keeps spaces in text, useful for 
@@ -45,7 +47,10 @@
   stepnumber=2,                    % the step between two line-numbers. 
   stringstyle=\color{mymauve},     % string literal style
   tabsize=2,                       % sets default tabsize to 2 spaces
-  title=\lstname                   % show the filename of files included 
+  title=\lstname,                   % show the filename of files included 
+  literate={æ}{{\"o}}1
+           {ø}{{\"a}}1
+           {å}{{\"u}}1
 }
 
 
