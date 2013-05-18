@@ -23,7 +23,8 @@
 
 \lstset{
   backgroundcolor=\color{white},   % choose the background color; you 
-  basicstyle=\footnotesize,        % the size of the fonts that are used 
+  %basicstyle=\footnotesize,
+  basicstyle=\ttfamily,            % the size of the fonts that are used 
   breakatwhitespace=false,         % sets if automatic breaks should 
   breaklines=true,                 % sets automatic line breaking
   captionpos=b,                    % sets the caption-position to bottom
@@ -67,9 +68,6 @@
 % \setlength\parindent{0pt} % For at fjerne automatiske indrykninger
 % \let\clearpage\relax % For at fjerne alle clearpage sideskift
 
-% Commands
-\newcommand{\code}[1]{\texttt{#1}}
-
 % Meta (til titelblad)
 % HUSK; at rette Jonas i titelbladet.
 \newcommand{\rtitle}{Erstattes med rapportens titel} %<----
@@ -79,6 +77,7 @@
 \newcommand{\rprints}{1} %<---- Erstattes med oplægsantal
 \newcommand{\rappendices}{0} %<---- Erstattes med bilagsantal og art
 \newcommand{\rlastpage}{} %<---- Erstattes med sideantal
+\newcommand{\code}[1]{\lstinline{#1}} %<---- Er fikset, skriver nu i mono :). (Skulle gerne skrive tekst i mono, til klasse navne. Ser ikke ud til at virke)
 
 %%Jonas
 \usepackage{lastpage}
