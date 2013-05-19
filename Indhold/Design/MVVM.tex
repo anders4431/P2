@@ -21,7 +21,7 @@ Meningen med commands er at adskille det objekt, der påkalder en kommando, fra 
 
 På denne måde bliver alt, der har med brugerfladen at gøre skilt fra logikken bag programmet. Disse er altså uafhængige og dette har flere fordele:
 
-\itemize
+\begin{itemize}
 
 \item {Tests kan køres på \textit{View Model} uafhængigt af \textit{View}.}
 Det vil sige, at man kan teste al logikken uden at skulle igennem brugerfladen. Dette gør det langt mere fordelagtigt at skrive unit-tests, da man på den måde kan instantiere klasser uafhængigt af brugerflade.
@@ -29,5 +29,5 @@ Det vil sige, at man kan teste al logikken uden at skulle igennem brugerfladen. 
 Dette kan lade sige gøre, idet \textit{View} er skrevet udelukkende i xaml, og en ny version burde derved virke med den eksisterende \textit{View Model}.
 \item{Idet brugergrænsefladen er skilt fra logikken, er udvidelse af systemet lettere.\cite{msdn1}}
 
-\enditemize
+\end{itemize}
 
