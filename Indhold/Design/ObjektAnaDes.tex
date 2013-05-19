@@ -1,9 +1,9 @@
-Dette afsnit handler om, hvordan man kan beskrive projektets problemområde i form af klasser og hændelser. Metoderne brugt i dette afsnit er hentet fra bogen \textit{Objektorienteret analyse og design} \cite{ObjektAnalyseDesign}. Klasser er overordnede repræsentationer af objekter, som for eksempel en enkel Pligt eller et Barn. Hændelser er de begivenheder og ændringer, som klasserne kan forårsage eller blive påvirket af. Klasser kan normalt blive beskrevet som et navneord, for eksempel en Admin eller en Pligt, mens hændelser kan blive beskrevet som udsagnsord, for eksempel en Admin som opretter en ny Pligt, og et Barn som efterfølgende optager denne Pligt. Klasser og hændelser for dette problemområde er blevet sat op i en hændelsestabel, som kan blive set på tabel \ref{Haendelstabel}. En plads som har et plustegn betyder, at den tilsvarende hændelse kun forekommer en gang pr. klasse instans, og et gangetegn betyder, at det kan forekomme flere gange.
+Dette afsnit handler om, hvordan man kan beskrive projektets problemområde i form af klasser og hændelser. Metoderne brugt i dette afsnit er hentet fra bogen \textit{Objektorienteret analyse og design} \cite{ObjektAnalyseDesign}. Klasser er overordnede repræsentationer af objekter, som for eksempel en enkel \code{Pligt} eller et \code{Barn}. Hændelser er de begivenheder og ændringer, som klasserne kan forårsage eller blive påvirket af. Klasser kan normalt blive beskrevet som et navneord, for eksempel en \code{Admin} eller en \code{Pligt,} mens hændelser kan blive beskrevet som udsagnsord, for eksempel en \code{Admin} som opretter en ny \code{Pligt}, og et \code{Barn} som efterfølgende optager denne \code{Pligt}. Klasser og hændelser for dette problemområde er blevet sat op i en hændelsestabel, som kan blive set på tabel \ref{Haendelstabel}. En plads som har et plustegn betyder, at den tilsvarende hændelse kun forekommer en gang pr. klasse instans, og et gangetegn betyder, at det kan forekomme flere gange.
 
 \begin{table}[htb]
 	\small 
 	\newcolumntype{C}{>{\centering}X}
-	\setlength{\tabcolsep}{6pt}
+	\setlength{\tabcolsep}{5pt}
 	
 	\begin{tabularx}{\textwidth}{|>{\bfseries}l|c|c|c|C|C|c|c|c|}
 		\hline
@@ -13,16 +13,16 @@ Dette afsnit handler om, hvordan man kan beskrive projektets problemområde i fo
 		\textbf{\code{Pligt}} & + & * &   &   & + &   &   &  							\tabularnewline \hline
 		\textbf{\code{Barn}}  &   & * & * &   & * & * & * & * 							\tabularnewline \hline
 		\textbf{\code{Model}} & * &   &   &   & * &   &   &  							\tabularnewline \hline
-		\textbf{\code{\small{Anmodning}}} &   &   & + & + &   &   &   &  						\tabularnewline \hline
+		\textbf{\code{Anmod}} &   &   & + & + &   &   &   &  						\tabularnewline \hline
 	\end{tabularx}
 	
 	\caption{Hændelsestabel}
 	\label{Haendelstabel}
 \end{table} 
  
-Tabellen giver et overordnet overblik til sammenhængen mellem klasser og hændelser, og være beskrivende for de mere væsentlige dele af problemområdet. En Anmodning er i denne sammenhæng en besked et barn sender til sin Admin om, at det har fuldført en af sine tilskrevne pligter og ønsker denne behandlet.
+Tabellen giver et overordnet overblik til sammenhængen mellem klasser og hændelser, og være beskrivende for de mere væsentlige dele af problemområdet. En \code{Anmodning} er i denne sammenhæng en besked et barn sender til sin \code{Admin} om, at det har fuldført en af sine tilskrevne pligter og ønsker denne behandlet.
 
-Klasserne kan herefter blive sat op i klasse diagram, som viser de indbyrdes sammenhænge mellem klasserne i problemområdet. Se figur \ref{KlasseDiagram}. Klassehierarkier bliver vist indkapslet i kasser, samt pile fra underklasser til superklasser. Rene streger viser associering, som Model og Admin, hvor lommepenge modellen går ind og påvirker på hvad forældrene gør i forhold til pligter og udbetalinger. En klasse som tilhører en anden klasse, bliver vist med en rombe istedet for en pil. Ligeledes angiver tallene mængden af hver klasse til en anden klasse. For eksempel så er en pligt altid kun forbundet til den Admin som lavede den, mens en Admin sagtens kan lave adskillige pligter.
+Klasserne kan herefter blive sat op i klasse diagram, som viser de indbyrdes sammenhænge mellem klasserne i problemområdet. Se figur \ref{KlasseDiagram}. Klassehierarkier bliver vist indkapslet i kasser, samt pile fra underklasser til superklasser. Rene streger viser associering, som \code{Model} og \code{Admin}, hvor lommepenge modellen går ind og påvirker på hvad forældrene gør i forhold til pligter og udbetalinger. En klasse som tilhører en anden klasse, bliver vist med en rombe i stedet for en pil. Ligeledes angiver tallene mængden af hver klasse til en anden klasse. For eksempel så er en \code{Pligt} altid kun forbundet til den \code{Admin} som lavede den, mens en \code{Admin} sagtens kan lave adskillige pligter.
 
 \begin{figure}[H]
 \centering
@@ -36,27 +36,27 @@ Ud fra den foregående hændelsestabel samt klassediagram kan man beskrive klass
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{Billeder/ForaelderForloeb.png}
-\caption{Admin-hændelsesforløb.}
+\caption{\code{Admin}-hændelsesforløb.}
 \label{ForaelderHaendelsesforloeb}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{Billeder/BoernForloeb.png}
-\caption{Barn-hændelsesforløb.}
+\caption{\code{Barn}-hændelsesforløb.}
 \label{BarnHaendelsesforloeb}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{Billeder/PligtForloeb.png}
-\caption{Pligt-hændelsesforløb.}
+\caption{\code{Pligt}-hændelsesforløb.}
 \label{PligtHaendelsesforloeb}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{Billeder/AnmodningForloeb.png}
-\caption{Anmodning-hændelsesforløb.}
+\caption{\code{Anmodning}-hændelsesforløb.}
 \label{AnmodningHaendelsesforloeb}
 \end{figure}
