@@ -24,7 +24,7 @@ Til at håndtere forbindelsen til objekt databasen, er der lavet en statisk klas
 Desværre oplevede vi, at efterhånden som vi fik lagt flere brugere, pligter og overførsler i databasen, blev den meget langsom. Derfor valgte vi til sidst, at skifte til at bruge den relationelle SQLite.
 
 
-I SQLite databasen, har vi lavet fire tabeller. De er designet til at gemme objekter af typerne \code{Transfers}, \code{Chores}, \code{Users} og \code{Childs}. Hver tabel indeholder så definerede felter/kolonner med et navn og en datatype. Disse navne og datatyper er for hver tabel beskrevet i tabel \ref{tab:sql1} og \ref{tab:sql2}. 
+I SQLite databasen, har vi lavet fire tabeller. De er designet til at gemme objekter af typerne \code{Transfers}, \code{Chores}, \code{Users} og \code{Childs}. Hver tabel indeholder så definerede felter/kolonner med et navn og en datatype. Disse navne og datatyper er for hver tabel beskrevet i tabel \ref{TransferChoresTabeller} og \ref{UsersChildssTabeller}. 
 I listing \ref{lst:sqlite} beskrives hvordan vi forbinder til sqlite bla bla bla..
 
 \newcommand{\cent}[1]{\hspace*{\fill}#1\hspace*{\fill}}
@@ -88,7 +88,6 @@ I listing \ref{lst:sqlite} beskrives hvordan vi forbinder til sqlite bla bla bla
 \end{table}
 
 \begin{lstlisting}[caption={Statisk klasse, der forbinder til objekt databasen NDatabase},label={lst:db}]
->>>>>>> a3bc11d472c8f56ad18f08cf31e3e7254c614162
 public static class db
 {
 	//En string dbFileName med filnavnet på databasen laves
@@ -122,76 +121,6 @@ public static class db
 }
 \end{lstlisting}
 
-<<<<<<< HEAD
-\begin{lstlisting}[caption={Uddrag af filen "db.cs" fra kildekoden til programmet},label={lst:sqlite}]
-    public static class db
-    {
-        private const string dbFileName = "test.sqlite";
-        private static SQLiteConnection conn;
-
-        public static void OpenDB()
-        {
-            conn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
-            conn.Open();
-        }
-
-        public static void CloseDB()
-        {
-            conn.Close();
-        }
-
-
-        public static void Store(Transfer transfer)
-        {
-            int ChildIDInDB = GetIDOfChild(transfer.Recipient);
-            string ChildID = ((ChildIDInDB == 0) ? "null" : ChildIDInDB.ToString());
-
-            string query = "INSERT INTO Transfers (Title, Description, Amount, Recipient, Date, Type, Sender) VALUES ('" +
-                            transfer.Title + "', '" +
-                            transfer.Description + "', '" +
-                            transfer.Amount.ToString(CultureInfo.GetCultureInfo("en-GB")) + "', '" +
-                            ChildID + "', '" +
-                            SQLiteConvert.ToUnixEpoch((DateTime)transfer.TransferDate) + "', '" +
-                            //DateTimeToUnixTimeStamp((DateTime)transfer.TransferDate) + "', '" +
-                            (int)transfer.Type + "', '" +
-                            "null" + "')"; //GetIDOfUser(transfer.Sender) + "', '" +   //TODO: implement
-
-            SQLiteCommand command = new SQLiteCommand(query, conn);
-            command.ExecuteNonQuery();
-        }
-
-
-        public static Collection<Transfer> GetTransfersForChild(Child child)
-        {
-            string query = "SELECT * FROM Transfers WHERE " +
-                            "Recipient IN (SELECT ID FROM Childs WHERE " +
-                                            "FirstName='" + child.FirstName + "'" +
-                                            ")";
-
-            SQLiteCommand command = new SQLiteCommand(query, conn);
-            SQLiteDataReader r = command.ExecuteReader();
-
-            Collection<Transfer> TransferList = new Collection<Transfer>();
-
-            while (r.Read())
-            {
-                int ID = r.GetInt32(r.GetOrdinal("ID"));
-                string Title = r.GetString(r.GetOrdinal("Title"));
-                string Description = r.GetString(r.GetOrdinal("Description"));
-                decimal Amount = r.GetDecimal(r.GetOrdinal("Amount"));
-                Child Recipient = child;
-                DateTime Date = SQLiteConvert.ToDateTime(((long)r["Date"]).ToString(), SQLiteDateFormats.UnixEpoch, DateTimeKind.Local);
-                ActivityType Type = (ActivityType)(long)r["Type"];
-                User Sender = null; //TODO: implement   ((int)r["Sender"] == null) ? null : GetUserById((int)r["Sender"]);
-
-                TransferList.Add(new Transfer(Title, Description, Amount, Recipient, Date, Type, Sender));
-            }
-
-            return TransferList;
-        }
-        }
-\end{lstlisting}
-=======
 \begin{lstlisting}[caption={Statisk klasse, der forbinder til den relationelle database SQLite},label={lst:sqlite}]
 public static class db
 {
@@ -260,4 +189,3 @@ public static class db
 	}
 }
 \end{lstlisting}
->>>>>>> a3bc11d472c8f56ad18f08cf31e3e7254c614162
