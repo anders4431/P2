@@ -7,14 +7,15 @@ MVVM er et separerings designmønster beregnet til klient-applikationer. Meninge
 \label{MVVM1}
 \end{figure}
 
-\itemize
+\begin{itemize}
 
 \item \textit{Model} består af alt logikken og operationerne bag programmet og er helt uafhængigt af brugergrænsefladen. Faktisk kender \textit{model} slet ikke til \textit{view}.
 
 \item \textit{View} er brugergrænsefladen. Det består af knapper, lister, paneler osv. Det giver brugeren den nødvendige information og registrerer brugerinput. Som følge af et brugerinput, giver \textit{View} besked til den underliggende \textit{View Model}. Det vil altså sige, at \textit{View} ikke ved, hvad der skal ske, hvis brugeren eksempelvis trykker på en given knap, men i stedet ved hjælp af commands bliver \textit{View Model} informeret og reagerer på interaktionen.  
 
 \item \textit{View Model} er som navnet antyder bindeleddet mellem \textit{Model} og \textit{View}. \textit{View Model} får data fra \textit{Model} og formaterer disse data, sådan at \textit{View} kan præsentere dem. Herudover er meningen, at \textit{View Model} gør \textit{View} opmærksom på, om data i \textit{Model} ændres og gør på samme måde \textit{Model} opmærksom på, om data skal ændres som følge af brugerinput på \textit{View}. Hvis eksempelvis brugeren trykker på en knap, som ændrer mængden af et givet element i programmet, registreres dette af \textit{View}, som meddeler det til \textit{View Model}. \textit{View Model} kan hente den nye mængde elementer ved hjælp af data-binding mellem \textit{View} og den tilhørende \textit{View Model}-class, og opdaterer derefter \textit{Model}. Denne data-binding er to-vejs, hvilket vil sige, at \textit{View Model} også kan opdatere \textit{View} i tilfælde af ændringer i \textit{Model}.
-\enditemize
+
+\end{itemize}
 
 Data-binding og commands, er  funktioner som WPF stiller til rådighed. Derfor udgør WPF og MVVM tilsammen en ganske stærk kombination. Data-binding kan, som tidligere nævnt, bruges som en forbindelse mellem brugerfladen og logikken. Man kan med de rette indstillinger på bindingen opnå, at når data ændres, opdateres denne ændring automatisk på de elementer, som er bundet til dataen \cite{msdn-databinding}. Denne binding er sædvanligvis to-vejs, da man som oftest ønsker at opdateringen sker begge veje. 
 Meningen med commands er at adskille det objekt, der påkalder en kommando, fra logikken der eksekverer kommandoen. Dette passer godt overens med ideen bag MVVM. 
