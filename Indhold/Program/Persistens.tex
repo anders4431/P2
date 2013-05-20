@@ -9,26 +9,24 @@ XML er et simpelt format, til at gemme information, der er let læseligt for bå
 %evt eksempel på noget xml værk?
 
 \subsubsection{Relationel database}
-En relationel database er god til at håndtere en stor mængde data med samme struktur. Data bliver delt op i tabeller med præcist definerede kolonner, og databasen selv understøtter en masse forskellige operationer (sorter efter, større end m.fl.), og kriterier for udvælgelse af hvilke data rækker der skal returneres. Af relationelle databaser kiggede vi specifikt på SQLite, som er et lille bibliotek, der kan integreres direkte i programmet. Modsat dette findes dedikerede database systemer som MySQL og PostgreSQL, der kører som separate programmer.
+En relationel database er god til at håndtere en stor mængde data med samme struktur. Data bliver delt op i tabeller med præcist definerede kolonner, og databasen selv understøtter en masse forskellige operationer (sorter efter, større end m.fl.), og kriterier for udvælgelse af hvilke data rækker der skal returneres. Af relationelle databaser kiggede vi specifikt på SQLite, som er et lille bibliotek, der kan integreres direkte i programmet. Modsat dette findes dedikerede database systemer som MySQL og PostgreSQL, der kører som separate programmer. Til at tilgå og manipulere data i en relationel database bruges sproget SQL.
 
 Her ligger det store arbejde i koblingen mellem objekter i vores program og rækker i databasen. Alle variable i en klasse skal mappes over til kolonner i databasen og specielt referencer til andre objekter og egne datatyper, kan være svære at håndtere. Denne problemstilling kendes som "The object-relational impedance mismatch"\cite{ORIM}.
 
 \subsubsection{Objekt database}
-En objektdatabase er forskellig fra en relationel database, på den måde, at den er baseret på objekter og derfor bare kan tage mod et objekt og gemme det.
+En objektdatabase er forskellig fra en relationel database, på den måde, at den er baseret på objekter og derfor bare kan tage mod et objekt og gemme det, uden at der først er defineret hvordan elementer i objektet mapper til felter i databasen.
+\\
 
 Vi har i udviklingsforløbet valgt at bruge en object database af flere årsager. For det første er den er enkel at implementere. For det andet, vil slippe for, at skulle lave en "mapping" mellem klasser i C\# og kolonner i den relationelle database, hvor med en relationel database, vil "mappingen" mellem klasser og kolonner skulle opdateres eller omskrives hver gang en klasse ændres. Dette vil specielt være omfattende for os, da vi med vores begrænsede erfaring i objekt orienteret programmering, ofte vil lave store ændringer af vores klasser.
 Til at klare opgaven som objekt database benyttes databasen NDatabase. NDatabase er en simpel open source objekt database lavet til C\#. Databasen understøtter LINQ, der er query sprog i Microsoft .NET Framework, der understøtter typesikkerhed og IntelliSense\cite{linqdok}.
 
-Til at håndtere forbindelsen til objekt databasen, er der lavet en statisk klasse. For at gemme fx et objekt af typen \code{Transfer} i databasen, benytter vi "Store" metoden beskrevet i listing \ref{lst:db} . For så at hente transfers ud igen, benyttes metoden \code{GetTransfersForChild}, der ved brug af en LINQ-forespørgelsel returnerer overførslerne hørende til et objekt af typen \code{Child}. Denne database forbindelse behøver stort set ingen opdateringer, selvom vi skulle lave store ændringer i klasserne.
+Til at håndtere forbindelsen til objekt databasen, er der lavet en statisk klasse. For at gemme fx et objekt af typen \code{Transfer} i databasen, benytter vi \code{Store} metoden beskrevet i listing \ref{lst:db} . For så at hente transfers ud igen, benyttes metoden \code{GetTransfersForChild}, der ved brug af en LINQ-forespørgelsel returnerer overførslerne hørende til et objekt af typen \code{Child}. Denne database forbindelse behøver stort set ingen opdateringer, selvom vi skulle lave store ændringer i klasserne.
 Desværre oplevede vi, at efterhånden som vi fik lagt flere brugere, pligter og overførsler i databasen, blev den meget langsom. Derfor valgte vi til sidst, at skifte til at bruge den relationelle SQLite.
 
-I SQLite databasen, har vi lavet 4 tables, til at gemme henholdsvis a og b.
-%\code{Transfers}, \code{Users}, \code{Childs} og \code{Chores}.
 
-\newenvironment{nscenter}
- {\parskip=0pt\par\nopagebreak\centering}
- {\par\noindent\ignorespacesafterend}
- 
+I SQLite databasen, har vi lavet fire tabeller. De er designet til at gemme objekter af typerne \code{Transfers}, \code{Chores}, \code{Users} og \code{Childs}. Hver tabel indeholder så definerede felter/kolonner med et navn og en datatype. Disse navne og datatyper er for hver tabel beskrevet i tabel \ref{tab:sql1} og \ref{tab:sql2}. 
+I listing \ref{lst:sqlite} beskrives hvordan vi forbinder til sqlite bla bla bla..
+
 \newcommand{\cent}[1]{\hspace*{\fill}#1\hspace*{\fill}}
  
 \begin{table}[htb]
@@ -89,7 +87,8 @@ I SQLite databasen, har vi lavet 4 tables, til at gemme henholdsvis a og b.
 	\label{UsersChildssTabeller}
 \end{table}
 
-\begin{lstlisting}[caption={Uddrag af filen "db.cs" fra kildekoden til programmet},label={lst:db}]
+\begin{lstlisting}[caption={Statisk klasse, der forbinder til objekt databasen NDatabase},label={lst:db}]
+>>>>>>> a3bc11d472c8f56ad18f08cf31e3e7254c614162
 public static class db
 {
 	//En string dbFileName med filnavnet på databasen laves
@@ -123,6 +122,7 @@ public static class db
 }
 \end{lstlisting}
 
+<<<<<<< HEAD
 \begin{lstlisting}[caption={Uddrag af filen "db.cs" fra kildekoden til programmet},label={lst:sqlite}]
     public static class db
     {
@@ -191,3 +191,73 @@ public static class db
         }
         }
 \end{lstlisting}
+=======
+\begin{lstlisting}[caption={Statisk klasse, der forbinder til den relationelle database SQLite},label={lst:sqlite}]
+public static class db
+{
+	private const string dbFileName = "test.sqlite";
+	private static SQLiteConnection conn;
+
+	public static void OpenDB()
+	{
+		conn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
+		conn.Open();
+	}
+
+	public static void CloseDB()
+	{
+	conn.Close();
+	}
+
+
+	public static void Store(Transfer transfer)
+	{
+		int ChildIDInDB = GetIDOfChild(transfer.Recipient);
+		string ChildID = ((ChildIDInDB == 0) ? "null" : ChildIDInDB.ToString());
+
+		string query = "INSERT INTO Transfers (Title, Description, Amount, Recipient, Date, Type, Sender) VALUES ('" +
+		transfer.Title + "', '" +
+		transfer.Description + "', '" +
+		transfer.Amount.ToString(CultureInfo.GetCultureInfo("en-GB")) + "', '" +
+		ChildID + "', '" +
+		SQLiteConvert.ToUnixEpoch((DateTime)transfer.TransferDate) + "', '" +
+		//DateTimeToUnixTimeStamp((DateTime)transfer.TransferDate) + "', '" +
+		(int)transfer.Type + "', '" +
+		null" + "')"; //GetIDOfUser(transfer.Sender) + "', '" +   //TODO: implement
+
+		SQLiteCommand command = new SQLiteCommand(query, conn);
+		command.ExecuteNonQuery();
+	}
+
+
+	public static Collection<Transfer> GetTransfersForChild(Child child)
+	{
+		string query = "SELECT * FROM Transfers WHERE " +
+						"Recipient IN (SELECT ID FROM Childs WHERE " +
+						"FirstName='" + child.FirstName + "'" +
+						")";
+
+		SQLiteCommand command = new SQLiteCommand(query, conn);
+		SQLiteDataReader r = command.ExecuteReader();
+
+		Collection<Transfer> TransferList = new Collection<Transfer>();
+
+		while (r.Read())
+		{
+			int ID = r.GetInt32(r.GetOrdinal("ID"));
+			string Title = r.GetString(r.GetOrdinal("Title"));
+			string Description = r.GetString(r.GetOrdinal("Description"));
+			decimal Amount = r.GetDecimal(r.GetOrdinal("Amount"));
+			Child Recipient = child;
+			DateTime Date = SQLiteConvert.ToDateTime(((long)r["Date"]).ToString(), SQLiteDateFormats.UnixEpoch, DateTimeKind.Local);
+			ActivityType Type = (ActivityType)(long)r["Type"];
+			User Sender = null; //TODO: implement   ((int)r["Sender"] == null) ? null : GetUserById((int)r["Sender"]);
+
+			TransferList.Add(new Transfer(Title, Description, Amount, Recipient, Date, Type, Sender));
+		}
+
+		return TransferList;
+	}
+}
+\end{lstlisting}
+>>>>>>> a3bc11d472c8f56ad18f08cf31e3e7254c614162
