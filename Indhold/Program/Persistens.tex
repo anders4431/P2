@@ -22,49 +22,73 @@ Til at klare opgaven som objekt database benyttes databasen NDatabase. NDatabase
 Til at håndtere forbindelsen til objekt databasen, er der lavet en statisk klasse. For at gemme fx et objekt af typen \code{Transfer} i databasen, benytter vi "Store" metoden beskrevet i listing \ref{lst:db} . For så at hente transfers ud igen, benyttes metoden \code{GetTransfersForChild}, der ved brug af en LINQ-forespørgelsel returnerer overførslerne hørende til et objekt af typen \code{Child}. Denne database forbindelse behøver stort set ingen opdateringer, selvom vi skulle lave store ændringer i klasserne.
 Desværre oplevede vi, at efterhånden som vi fik lagt flere brugere, pligter og overførsler i databasen, blev den meget langsom. Derfor valgte vi til sidst, at skifte til at bruge den relationelle SQLite.
 
-I SQLite databasen, har vi lavet 4 tables, til at gemme henholdsvis \code{Transfers}, \code{Users}, \code{Childs} og \code{Chores}.
+I SQLite databasen, har vi lavet 4 tables, til at gemme henholdsvis a og b.
+%\code{Transfers}, \code{Users}, \code{Childs} og \code{Chores}.
 
+\newenvironment{nscenter}
+ {\parskip=0pt\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+ 
+\newcommand{\cent}[1]{\hspace*{\fill}#1\hspace*{\fill}}
+ 
+\begin{table}[htb]
+	\small 
+	\newcolumntype{C}{>{\centering}X}
+	\setlength{\tabcolsep}{1pt}
+	
+	\begin{tabularx}{\textwidth}{||c|C||c|X||}
+		\hline 
+		\multicolumn{2}{||c||}{Transfers} & \multicolumn{2}{c||}{Chores}\\
+		\hline
+		ID & Int (Primary, Increment) & ID & \cent{Int (Primary, Increment)} \\ 
+		\hline 
+		Title & Text & Title & \cent{Text} \\ 
+		\hline 
+		Amount & Real & Amount & \cent{Real} \\ 
+		\hline 
+		Description & Text & Description & \cent{Text} \\ 
+		\hline 
+		ReCipient & Int (Foreign) & Deadline & \cent{Int} \\ 
+		\hline 
+		Date & Int & State & \cent{Int} \\ 
+		\hline 
+		Sender & Int (Foreign) & Assigned Child & \cent{Int (Foreign)} \\ 
+		\hline 
+		Type & Int & Type & \cent{Int} \\ 
+		\hline 
+	\end{tabularx}
+	
+	\caption{Transfer- \& Chores-tabeller}
+	\label{TransferChoresTabeller}
+\end{table}
 
-\begin{tabular}{||c|c||c|c||c|c||c|c}
-\hline 
-\multicolumn{2}{||c||}{Transfers} & \multicolumn{2}{c||}{Chores}\\
-\hline
-ID & Int (Primary) & ID & Int (Primary) \\ 
-\hline 
-Title & Text & Title & Text \\ 
-\hline 
-Amount & Real & Amount & Real \\ 
-\hline 
-Description & Text & Description & Text \\ 
-\hline 
-Recipient & Int (Foreign) & Deadline & Int \\ 
-\hline 
-Date & Int & State & Int \\ 
-\hline 
-Sender & Int (Foreign) & Assigned Child & Int (Foreign) \\ 
-\hline 
-Type & Int & Type & Int \\ 
-\hline 
-\end{tabular} 
+\begin{table}[htb]
+	\small 
+	\newcolumntype{C}{>{\centering}X}
+	\setlength{\tabcolsep}{1pt}
+	
+	\begin{tabularx}{\textwidth}{||c|C||c|X||}
+		\hline 
+		\multicolumn{2}{||c||}{Users} & \multicolumn{2}{c||}{Childs}\\
+		\hline
+		ID & Int (Primary, Increment) & ID & \cent{Int (Primary, Increment)} \\ 
+		\hline 
+		First name & Text & First name & \cent{Text} \\ 
+		\hline 
+		Last name & Text & Last name & \cent{Text} \\ 
+		\hline 
+		Password & Text & Password & \cent{Text} \\ 
+		\hline 
+		IsAdmin & Int & IsAdmin & \cent{Int} \\ 
+		\hline 
+		- & - & Amount & \cent{Real} \\ 
+		\hline 
+	\end{tabularx}
+	
+	\caption{Users- \& Childs-tabeller}
+	\label{UsersChildssTabeller}
+\end{table}
 
-\begin{tabular}{||c|c||c|c||c|c||c|c}
-\hline 
-\multicolumn{2}{||c||}{Users} & \multicolumn{2}{c||}{Childs}\\
-\hline
-ID & Int (Primary) & ID & Int (Primary) \\ 
-\hline 
-First name & Text & First name & Text \\ 
-\hline 
-Last name & Text & Last name & Text \\ 
-\hline 
-Password & Text & Password & Text \\ 
-\hline 
-IsAdmin & Int & IsAdmin & Int \\ 
-\hline 
- &  & Amount & Real \\ 
-\hline 
-\end{tabular}
-\\
 \begin{lstlisting}[caption={Uddrag af filen "db.cs" fra kildekoden til programmet},label={lst:db}]
 public static class db
 {
