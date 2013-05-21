@@ -20,13 +20,13 @@ En objektdatabase er forskellig fra en relationel database, på den måde, at de
 Vi har i udviklingsforløbet valgt at bruge en object database af flere årsager. For det første er den er enkel at implementere. For det andet, vil slippe for, at skulle lave en "mapping" mellem klasser i C\# og kolonner i den relationelle database, hvor med en relationel database, vil "mappingen" mellem klasser og kolonner skulle opdateres eller omskrives hver gang en klasse ændres. Dette vil specielt være omfattende for os, da vi med vores begrænsede erfaring i objekt orienteret programmering, ofte vil lave store ændringer af vores klasser.
 Til at klare opgaven som objekt database benyttes databasen NDatabase. NDatabase er en simpel open source objekt database lavet til C\#. Databasen understøtter LINQ, der er query sprog i Microsoft .NET Framework, der understøtter typesikkerhed og IntelliSense\cite{linqdok}.
 
-Til at håndtere forbindelsen til objekt databasen, er der lavet en statisk klasse. For at gemme fx et objekt af typen \code{Transfer} i databasen, benytter vi \code{Store} metoden beskrevet i listing \ref{lst:db} . For så at hente transfers ud igen, benyttes metoden \code{GetTransfersForChild}, der ved brug af en LINQ-forespørgelsel returnerer overførslerne hørende til et objekt af typen \code{Child}. Denne database forbindelse behøver stort set ingen opdateringer, selvom vi skulle lave store ændringer i klasserne.
+Til at håndtere forbindelsen til objekt databasen, er der lavet en statisk klasse. For at gemme fx et objekt af typen \code{Transfer} i databasen, benytter vi \code{Store} metoden beskrevet i listing \ref{lst:db} i bilag. For så at hente transfers ud igen, benyttes metoden \code{GetTransfersForChild}, der ved brug af en LINQ-forespørgelsel returnerer overførslerne hørende til et objekt af typen \code{Child}. Denne database forbindelse behøver stort set ingen opdateringer, selvom vi skulle lave store ændringer i klasserne.
 Desværre oplevede vi, at efterhånden som vi fik lagt flere brugere, pligter og overførsler i databasen, blev den meget langsom. Derfor valgte vi til sidst, at skifte til at bruge den relationelle database SQLite.
 
 
 I SQLite databasen, har vi lavet fire tabeller. De er designet til at gemme objekter af typerne \code{Transfers}, \code{Chores}, \code{Users} og \code{Childs}. Hver tabel indeholder så definerede felter/kolonner med et navn og en datatype. Disse navne og datatyper er for hver tabel beskrevet i tabel \ref{TransferChoresTabeller} og \ref{UsersChildssTabeller}. 
 
-I listing \ref{lst:sqlite} vises et uddrag af den statiske klasse vi bruger til at forbinde til SQLite databasen. Uddraget viser metoderne \code{Store} og \code{GetTransfersForChild}, der opnår samme resultat som metoderne beskrevet i listing \ref{lst:db}. Til sammenligning kan ses, at metoden der skal gemme en \code{Transfer} præcist definerer hvilke variable, og hvor de skal gemmes i en SQL streng, mens objekt databasen bare kan modtage og gemme objektet. I \code{GetTransfersForChild} metoden i SQLite forbindelsen, laves der igen en SQL streng, og derefter bliver der for hver returnerede række lavet et objekt, og tilføjet til en liste. I objekt database udgaven bliver der lavet en noget pænere LINQ forespørgsel, og objekterne behøves ikke laves på ny.
+I listing \ref{lst:sqlite} vises et uddrag af den statiske klasse vi bruger til at forbinde til SQLite databasen. Uddraget viser metoderne \code{Store} og \code{GetTransfersForChild}, der opnår samme resultat som metoderne beskrevet i listing \ref{lst:db} i bilag. Til sammenligning kan ses, at metoden der skal gemme en \code{Transfer} præcist definerer hvilke variable, og hvor de skal gemmes i en SQL streng, mens objekt databasen bare kan modtage og gemme objektet. I \code{GetTransfersForChild} metoden i SQLite forbindelsen, laves der igen en SQL streng, og derefter bliver der for hver returnerede række lavet et objekt, og tilføjet til en liste. I objekt database udgaven bliver der lavet en noget pænere LINQ forespørgsel, og objekterne behøves ikke laves på ny.
 
 \newcommand{\cent}[1]{\hspace*{\fill}#1\hspace*{\fill}}
  
@@ -87,113 +87,3 @@ I listing \ref{lst:sqlite} vises et uddrag af den statiske klasse vi bruger til 
 	\caption{Users- \& Childs-tabeller}
 	\label{UsersChildssTabeller}
 \end{table}
-
-\begin{lstlisting}[caption={Statisk klasse, der forbinder til objekt databasen NDatabase},label={lst:db}]
-public static class db
-{
-	//En string dbFileName med filnavnet på databasen laves
-	private const string dbFileName = "database.db";
-	
-	//Herefter åbnes database forbindelsen
-	private static NDatabase.Api.IOdb odb = OdbFactory.Open(dbFileName);
-
-	public static void Store(Transfer transfer)
-	{
-		//Objektet bliver sendt til databasen
-		odb.Store(transfer);
-		
-		//Databasen bliver tvunget til at opdatere
-		odb.Commit();
-	}
-	
-	public static Collection<Transfer> GetTransfersForChild(Child child)
-	{
-		var transfers = from transfer in odb.QueryAndExecute<Transfer>()
-						where transfer.Recipient != null && transfer.Recipient.FullName == child.FullName
-						select transfer;
-
-		Collection<Transfer> Transfers = new Collection<Transfer>();
-
-		foreach (var t in transfers)
-			Transfers.Add(t);
-
-		return Transfers;
-	}
-}
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Statisk klasse, der forbinder til den relationelle database SQLite},label={lst:sqlite}]
-public static class db
-{
-	//Navnet på filen databasen skal gemmes i
-	private const string dbFileName = "test.sqlite";
-	private static SQLiteConnection conn;
-
-	//Metoder til at åbne og lukke forbindelsen til databasen
-	public static void OpenDB()
-	{
-		conn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
-		conn.Open();
-	}
-	public static void CloseDB()
-	{
-		conn.Close();
-	}
-
-	//Metode til at gemme et objekt af typen Transfer i databasen
-	public static void Store(Transfer transfer)
-	{
-		int ChildIDInDB = GetIDOfChild(transfer.Recipient);
-		string ChildID = ((ChildIDInDB == 0) ? "null" : ChildIDInDB.ToString());
-
-		//Selve SQL kommandoen bliver lavet som en streng
-		string query = "INSERT INTO Transfers (Title, Description, Amount, Recipient, Date, Type, Sender) VALUES ('" +
-		transfer.Title + "', '" +
-		transfer.Description + "', '" +
-		transfer.Amount.ToString(CultureInfo.GetCultureInfo("en-GB")) + "', '" +
-		ChildID + "', '" +
-		SQLiteConvert.ToUnixEpoch((DateTime)transfer.TransferDate) + "', '" +
-		//DateTimeToUnixTimeStamp((DateTime)transfer.TransferDate) + "', '" +
-		(int)transfer.Type + "', '" +
-		null" + "')"; //GetIDOfUser(transfer.Sender) + "', '" +   //TODO: implement
-
-		//SQL kommandoen bliver udført
-		SQLiteCommand command = new SQLiteCommand(query, conn);
-		command.ExecuteNonQuery();
-	}
-
-	//Metode der tager mod et objekt af typen Child, og returnerer Transfers
-	public static Collection<Transfer> GetTransfersForChild(Child child)
-	{
-		//En SQL kommando opbygges
-		string query = "SELECT * FROM Transfers WHERE " +
-						"Recipient IN (SELECT ID FROM Childs WHERE " +
-						"FirstName='" + child.FirstName + "'" +
-						")";
-
-		//Kommandoen udføres
-		SQLiteCommand command = new SQLiteCommand(query, conn);
-		SQLiteDataReader r = command.ExecuteReader();
-
-		Collection<Transfer> TransferList = new Collection<Transfer>();
-
-		//For hvert række returneret af databasen
-		while (r.Read())
-		{
-			int ID = r.GetInt32(r.GetOrdinal("ID"));
-			string Title = r.GetString(r.GetOrdinal("Title"));
-			string Description = r.GetString(r.GetOrdinal("Description"));
-			decimal Amount = r.GetDecimal(r.GetOrdinal("Amount"));
-			Child Recipient = child;
-			DateTime Date = SQLiteConvert.ToDateTime(((long)r["Date"]).ToString(), SQLiteDateFormats.UnixEpoch, DateTimeKind.Local);
-			ActivityType Type = (ActivityType)(long)r["Type"];
-			User Sender = null; //TODO: implement   ((int)r["Sender"] == null) ? null : GetUserById((int)r["Sender"]);
-
-			//Lav et nyt objekt af typen Transfer, og tilføj det til TransferList
-			TransferList.Add(new Transfer(Title, Description, Amount, Recipient, Date, Type, Sender));
-		}
-
-		return TransferList;
-	}
-}
-\end{lstlisting}
