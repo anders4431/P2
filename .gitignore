@@ -39,3 +39,4 @@
 .settings/
 .texlipse
 *.synctex.gz*
+.DS_STORE
