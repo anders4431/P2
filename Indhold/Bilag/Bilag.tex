@@ -65,26 +65,24 @@ public static class db
 		conn.Close();
 	}
 
-	//Metode til at gemme et objekt af typen Transfer i databasen
 	public static void Store(Transfer transfer)
 	{
 		int ChildIDInDB = GetIDOfChild(transfer.Recipient);
 		string ChildID = ((ChildIDInDB == 0) ? "null" : ChildIDInDB.ToString());
 
-		//Selve SQL kommandoen bliver lavet som en streng
 		string query = "INSERT INTO Transfers (Title, Description, Amount, Recipient, Date, Type, Sender) VALUES ('" +
-		transfer.Title + "', '" +
-		transfer.Description + "', '" +
-		transfer.Amount.ToString(CultureInfo.GetCultureInfo("en-GB")) + "', '" +
-		ChildID + "', '" +
-		SQLiteConvert.ToUnixEpoch((DateTime)transfer.TransferDate) + "', '" +
-		//DateTimeToUnixTimeStamp((DateTime)transfer.TransferDate) + "', '" +
-		(int)transfer.Type + "', '" +
-		null" + "')"; //GetIDOfUser(transfer.Sender) + "', '" +   //TODO: implement
+						transfer.Title + "', '" +
+						transfer.Description + "', '" +
+						transfer.Amount.ToString(CultureInfo.GetCultureInfo("en-GB")) + "', '" +
+						ChildID + "', '" +
+						SQLiteConvert.ToUnixEpoch((DateTime)transfer.TransferDate) + "', '" +
+						//DateTimeToUnixTimeStamp((DateTime)transfer.TransferDate) + "', '" +
+						(int)transfer.Type + "', '" +
+						GetIDOfUser(transfer.Sender) + "')"; //GetIDOfUser(transfer.Sender) + "', '" +   //TODO: implement
 
-		//SQL kommandoen bliver udført
 		SQLiteCommand command = new SQLiteCommand(query, conn);
 		command.ExecuteNonQuery();
+		NotifyTransferCreated(transfer);
 	}
 
 	//Metode der tager mod et objekt af typen Child, og returnerer Transfers
@@ -112,13 +110,61 @@ public static class db
 			Child Recipient = child;
 			DateTime Date = SQLiteConvert.ToDateTime(((long)r["Date"]).ToString(), SQLiteDateFormats.UnixEpoch, DateTimeKind.Local);
 			ActivityType Type = (ActivityType)(long)r["Type"];
-			User Sender = null; //TODO: implement   ((int)r["Sender"] == null) ? null : GetUserById((int)r["Sender"]);
+			User Sender = ((long)r["Sender"] == 0) ? null : GetUser(r.GetInt32(r.GetOrdinal("Sender")));
 
-			//Lav et nyt objekt af typen Transfer, og tilføj det til TransferList
-			TransferList.Add(new Transfer(Title, Description, Amount, Recipient, Date, Type, Sender));
-		}
-
-		return TransferList;
+		TransferList.Add(new Transfer(Title, Description, Amount, Recipient, Date, Type, Sender));
 	}
+
+	return TransferList;
 }
 \end{lstlisting}
+
+%public static void Store(Transfer transfer)
+        %{
+            %int ChildIDInDB = GetIDOfChild(transfer.Recipient);
+            %string ChildID = ((ChildIDInDB == 0) ? "null" : ChildIDInDB.ToString());
+
+            %string query = "INSERT INTO Transfers (Title, Description, Amount, Recipient, Date, Type, Sender) VALUES ('" +
+                            %transfer.Title + "', '" +
+                            %transfer.Description + "', '" +
+                            %transfer.Amount.ToString(CultureInfo.GetCultureInfo("en-GB")) + "', '" +
+                            %ChildID + "', '" +
+                            %SQLiteConvert.ToUnixEpoch((DateTime)transfer.TransferDate) + "', '" +
+                            %//DateTimeToUnixTimeStamp((DateTime)transfer.TransferDate) + "', '" +
+                            %(int)transfer.Type + "', '" +
+                            %GetIDOfUser(transfer.Sender) + "')"; //GetIDOfUser(transfer.Sender) + "', '" +   //TODO: implement
+
+            %SQLiteCommand command = new SQLiteCommand(query, conn);
+            %command.ExecuteNonQuery();
+            %NotifyTransferCreated(transfer);
+        %}
+
+%public static Collection<Transfer> GetTransfers(Child child = null)
+%{
+	%string ChildStr = (child == null) ? "" : "Recipient='" + GetIDOfChild(child) + "'";
+
+	%string query = "SELECT * FROM Transfers " +
+				%((String.IsNullOrEmpty(ChildStr)) ? "" : "WHERE ") +
+				%ChildStr;
+
+	%SQLiteCommand command = new SQLiteCommand(query, conn);
+	%SQLiteDataReader r = command.ExecuteReader();
+
+	%Collection<Transfer> TransferList = new Collection<Transfer>();
+
+	%while (r.Read())
+	%{
+		%int ID = r.GetInt32(r.GetOrdinal("ID"));
+		%string Title = r.GetString(r.GetOrdinal("Title"));
+		%string Description = r.GetString(r.GetOrdinal("Description"));
+		%decimal Amount = r.GetDecimal(r.GetOrdinal("Amount"));
+		%Child Recipient = (child == null) ? GetChild(r.GetInt32(r.GetOrdinal("Recipient"))) : child;
+		%DateTime Date = SQLiteConvert.ToDateTime(((long)r["Date"]).ToString(), SQLiteDateFormats.UnixEpoch, DateTimeKind.Local);
+		%ActivityType Type = (ActivityType)(long)r["Type"];
+		%User Sender = ((long)r["Sender"] == 0) ? null : GetUser(r.GetInt32(r.GetOrdinal("Sender")));
+
+		%TransferList.Add(new Transfer(Title, Description, Amount, Recipient, Date, Type, Sender));
+	%}
+
+	%return TransferList;
+%}
