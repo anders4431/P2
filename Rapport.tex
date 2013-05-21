@@ -9,10 +9,15 @@
 \input{Forside}
 \thispagestyle{empty}
 \end{titlepage}
-
+\newpage
+\thispagestyle{empty}
+\mbox{}
 % AAU Titelblad
 % Muligt at indsætte denne i PDF'ens indholdsfortegnelse?
 \input{Titelblad}
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \addtocontents{toc}{\protect\enlargethispage{-35mm}} %lav en margin i bunden af den forste side af TOC
 \tableofcontents
@@ -26,6 +31,10 @@
 
 %Projektafgrænsning
 \relinput{Indhold/ProjektAfgransning/ProjektAfgransning}
+
+\newpage
+%\thispagestyle{empty} % ved ikke om sidetal skal fjernes fra denne tomme side
+\mbox{}
 
 %Design Kapitel
 \relinput{Indhold/Design/Design}

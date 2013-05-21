@@ -1,7 +1,8 @@
 \newgeometry{top=1in,bottom=1in,right=1in,left=1in}
+\pagestyle{empty} % Fjerner sidetal fra bilag
 \chapter*{Bilag 1: Danske Bank forside}
-\thispagestyle{empty}
 \setcounter{page}{1}
+\thispagestyle{empty} % Fjerner sidetal fra bilag
 \begin{figure}[H]
 \includegraphics [width=\linewidth]{Billeder/bilagdb1.png}
 \caption {Her ses et eksempel på den skærm man bliver mødt af når man logger ind på Danske Banks netbank}
@@ -9,8 +10,8 @@
 \end{figure}
 
 \chapter*{Bilag 2: Databaseforbindelser}
-\thispagestyle{empty}
 \setcounter{page}{1}
+\thispagestyle{empty} % Fjerner sidetal fra bilag
 \begin{lstlisting}[caption={Statisk klasse, der forbinder til objekt databasen NDatabase},label={lst:db}]
 public static class db
 {
