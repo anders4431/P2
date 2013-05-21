@@ -14,8 +14,9 @@
 % Muligt at indsætte denne i PDF'ens indholdsfortegnelse?
 \input{Titelblad}
 
-
+\addtocontents{toc}{\protect\enlargethispage{-35mm}} %lav en margin i bunden af den forste side af TOC
 \tableofcontents
+\thispagestyle{empty} %fjern sidetal for den anden side af TOC
 
 %Indledning
 \relinput{Indhold/Indledning/indledning}
